@@ -14,3 +14,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # Include header files
 include_directories(include)
+
+# Compiling executables
+add_executable(Linear
+  include/Linear.h
+  src/Linear.cpp
+  tests/Linear.cpp)
