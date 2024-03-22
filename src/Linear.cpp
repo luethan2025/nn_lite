@@ -41,11 +41,22 @@ Linear::Linear(int input_size, int output_size, string initialization) {
 }
 
 vector<vector<double>> Linear::get_weights() {
-  return weights;
+  vector<vector<double>> weights_copy = vector<vector<double>>();
+  for (int o = 0; o < out_dim; o++) {
+    weights_copy.push_back(vector<double>());
+    for (int i = 0; i < in_dim; i++) {
+      weights_copy.back().push_back(weights[o][i]);
+    }
+  }
+  return weights_copy;
 }
 
 vector<double> Linear::get_bias() {
-  return bias;
+  vector<double> bias_copy = vector<double>();
+  for (int o = 0; o < out_dim; o++) {
+    bias_copy.push_back(bias[o]);
+  }
+  return bias_copy;
 }
 
 vector<double> Linear::forward(vector<double> x) {
