@@ -1,5 +1,4 @@
 #include <random>
-#include <cmath>
 #include "Linear.h"
 
 using namespace std;
