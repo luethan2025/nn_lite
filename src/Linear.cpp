@@ -66,6 +66,10 @@ vector<double> Linear::forward(vector<double> x) {
 
   vector<double> y = vector<double>();
 
+  for (int i = 0; i < in_dim; i++) {
+    in_vals.push_back(x[i]);
+  }
+
   for (int o = 0; o < out_dim; o++) {
     double result = 0.0;
     for (int w = 0; w < in_dim; w++) {
@@ -75,4 +79,28 @@ vector<double> Linear::forward(vector<double> x) {
     y.push_back(result);
   }
   return y;
+}
+
+vector<double> Linear::backward(vector<double> grad) {
+  if (grad.size() != out_dim) {
+    throw logic_error("Dimension mismatch");
+  }
+
+  vector<double> prev_grad = vector<double>();
+
+  for (int i = 0; i < in_dim; i++) {
+    double g = 0.0;
+    for (int o = 0; o < out_dim; o++) {
+      g += grad[o] * weights[o][i];
+    }
+    prev_grad.push_back(g);
+  }
+
+  for (int o = 0; o < out_dim; o++) {
+    for (int i = 0; i < in_dim; i++) {
+      weights[o][i] -= grad[o] * in_vals[i];
+    }
+    bias[o] -= grad[o];
+  }
+  return prev_grad;
 }

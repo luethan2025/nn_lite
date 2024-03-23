@@ -4,6 +4,8 @@
 using namespace std;
 
 int main() {
+  double tolerance = 1e-9;
+
   cout << "--------------------------------------------------------------------"
        << endl;
 
@@ -145,8 +147,71 @@ int main() {
        << endl
        << endl;
 
-  cout << "Linear layer returns the correct forward pass values with no errors"
-       << endl; 
+  cout << "--------------------------------------------------------------------"
+       << endl;
+
+  cout << "Creating a linear layer with in_dim of size 4 and out_dim of size 2"
+       << endl;
+  cout << "Initializing weight matrix using Xavier initialization"
+       << endl
+       << endl;
+  L = Linear(4, 2, "Xavier");
+
+  cout << "Running forward pass using vector {1.0, 1.0, 1.0, 1.0}"
+       << endl
+       << endl;
+
+  x = {1.0, 1.0, 1.0, 1.0};
+  L.forward(x);
+
+  vector<vector<double>> prev_weights = L.get_weights();
+  vector<double> prev_bias = L.get_bias();
+
+  cout << "Testing backpropagation using vector {-1.0, 1.0}"
+       << endl;
+
+  vector<double> grad = {-1.0, 1.0};
+  vector<double> prev_grad = L.backward(grad);
+
+  weights = L.get_weights();
+  bias = L.get_bias();
+
+  for (int o = 0; o < bias.size(); o++) {
+    try {
+      if (abs(prev_bias[o] - (grad[o] + bias[o])) > tolerance) {
+        throw runtime_error("Backpropagation failed on vector {-1.0, 1.0}");
+      }
+    } catch (const runtime_error e) {
+      cout << e.what()
+           << endl;
+      cout << "Terminating test"
+           << endl;
+      break;
+    }
+  }
+
+  for (int o = 0; o < weights.size(); o++) {
+    try {
+      for (int i = 0; i < weights[o].size(); i++) {
+        if (abs(prev_weights[o][i] - (weights[o][i] + (grad[o] * x[i])))
+              > tolerance) {
+          throw runtime_error("Backpropagation failed on vector {-1.0, 1.0}");
+        }
+      }
+    } catch (const runtime_error e) {
+      cout << e.what()
+           << endl;
+      cout << "Terminating test"
+           << endl;
+      break;
+    }
+  }
+
+  cout << "Backpropagation updated the weights and bias correctly"
+      << endl;
+
+  cout << "--------------------------------------------------------------------"
+       << endl;
 
   return 0;
 }
