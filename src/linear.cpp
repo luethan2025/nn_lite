@@ -127,7 +127,7 @@ vector<double> Linear::forward(const vector<double> &x) {
  * @note
  * The weight matrix and the bias vector are updated using the Mean Square
  * Error (MSE)/L2 loss function:
- *   E = (y - ŷ)²
+ *   E = (y - ŷ)^2
  * 
  * @param grad Gradient (Loss w.r.t. data) flowing backwards from the next
  *             layer

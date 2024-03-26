@@ -27,3 +27,14 @@ add_executable(linear_test
   util/include/print_util.h
   util/src/print_util.cpp
   tests/linear_test.cpp)
+  
+add_executable(sigmoid_test
+  include/sigmoid.h
+  src/sigmoid.cpp
+  util/include/isclose.h
+  util/src/isclose.cpp
+  util/include/sigmoid_test_util.h
+  util/src/sigmoid_test_util.cpp
+  util/include/print_util.h
+  util/src/print_util.cpp
+  tests/sigmoid_test.cpp)

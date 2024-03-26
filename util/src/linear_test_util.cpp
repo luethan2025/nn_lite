@@ -14,7 +14,7 @@
  * @param layer Linear object
  * @param x Input vector
  *
- * @throws runtime_error if
+ * @throws runtime_error if forward pass does not return the correct value
  */
 void test_forward_pass(Linear layer, const vector<double> &x) {
   print_forward_pass_message(x);
